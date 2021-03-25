@@ -23,14 +23,21 @@ class TweetsController < ApplicationController
   # POST /tweets or /tweets.json
   def create
     @tweet = Tweet.new(tweet_params)
-    @tweets = Tweet.all.order(created_at: :desc)
 
     respond_to do |format|
       if @tweet.save
 
         format.html { redirect_to tweets_path }
       else
-        format.html { render :index }
+        format.turbo_stream do
+          render(
+            turbo_stream: turbo_stream.replace(
+              @tweet,
+              partial: "tweets/form", locals: { tweet: @tweet }
+            )
+          )
+        end
+        format.html { render :new }
       end
     end
   end
