@@ -1,7 +1,9 @@
-<div class="border mb-2">
-  <p><%= tweet.body %></p>
-  <div>
-    Likes (<%= tweet.likes_count %>)
-    Retweets (<%= tweet.retweets_count %>)
+<%= turbo_frame_tag dom_id(tweet) do %>
+  <div class="border mb-2">
+    <p><%= tweet.body %></p>
+    <div>
+      Likes (<%= tweet.likes_count %>)
+      Retweets (<%= tweet.retweets_count %>)
+    </div>
   </div>
-</div>
+<% end %>
